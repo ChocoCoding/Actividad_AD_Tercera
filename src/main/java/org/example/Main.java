@@ -119,7 +119,15 @@ public class Main {
                     modificarDocumento(session);
                     break;
                 case 2:
+                    eliminarUnNodoPorID(session);
                     break;
+                case 3:
+                    obtenerProductosPorOrden(session);
+                    break;
+                case 4:
+                    mostrarProductosDisponibilidad(session);
+                case 5:
+                    mostrarMasCaroPorCategoria(session);
                 case 0:
                     System.out.println();
                     break;
@@ -130,28 +138,108 @@ public class Main {
         }while (opt!=0);
     }
 
-    private static void modificarDocumento(BaseXClient sesion) {
+    private static void mostrarMasCaroPorCategoria(BaseXClient session) {
+        String con = String.format("for $cat in distinct-values(db:get('productos')/productos/producto/categoria)\n" +
+                "let $prod := db:get('productos')/productos/producto[categoria = $cat][1]\n" +
+                "where max($prod/precio)\n" +
+                "return \n" +
+                "<producto>\n" +
+                "{$prod/categoria}\n" +
+                "{$prod/nombre}\n" +
+                "{$prod/precio}\n" +
+                "</producto>");
+
         try {
+            BaseXClient.Query query = session.query(con);
+
+            while (query.more()){
+                System.out.println(query.next());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
-        //ArrayList<String> resultados = ejecutarConsultaMultiple(sesion, "for $i in db:get('" + nombreBdXML + "') return $i");
-        //for(int i = 0; i < resultados.size(); i++)
-        //    System.out.println(i + " --> " + resultados.get(i));
+    }
 
-        sesion.execute("open " + nombreBdXML);
+    private static void mostrarProductosDisponibilidad(BaseXClient session) {
+        int disp = pedirInt("Introduce el valor de la disponibilidad");
 
+        String con = String.format("for $prod in db:get('productos')/productos/producto\n" +
+                "where $prod/disponibilidad >" + disp +"\n" +
+                "return\n" +
+                "<producto>\n" +
+                "{$prod/id}\n" +
+                "{$prod/nombre}\n" +
+                "{$prod/precio}\n" +
+                "{$prod/disponibilidad}\n" +
+                "{$prod/categoria}\n" +
+                "</producto>");
+
+        try {
+            BaseXClient.Query query = session.query(con);
+
+            while (query.more()){
+                System.out.println(query.next());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void obtenerProductosPorOrden(BaseXClient session) {
+
+        String con = String.format("for $prod in db:get('productos')/productos/producto\n" +
+                "order by $prod/nombre\n" +
+                "return\n" +
+                "<producto>\n" +
+                "{$prod/id}\n" +
+                "{$prod/nombre}\n" +
+                "{$prod/precio}\n" +
+                "{$prod/disponibilidad}\n" +
+                "{$prod/categoria}\n" +
+                "</producto>");
+
+
+            try {
+                BaseXClient.Query query = session.query(con);
+                while (query.more()){
+                    System.out.println(query.next());
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+
+    }
+
+    private static void eliminarUnNodoPorID(BaseXClient session) {
+        int id = pedirInt("Indique la id del documento a eliminar: ");
+        String con = String.format("delete node db:get('productos')/productos/producto[id='" + id +"']");
+
+        try {
+            BaseXClient.Query query = session.query(con);
+            System.out.println(query.more());
+            System.out.println(query.info());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private static void modificarDocumento(BaseXClient sesion) {
         int id = pedirInt("Indique la id del documento a reemplazar: ");
-        String resultado = "";
-        do {
-            String campoModificar = pedirString("Introduzca el campo que quiere cambiar: ");
-            String nuevoValorCampo = pedirString("Nuevo valor del campo: ");
+        String campoModificar = pedirString("Introduzca el campo que quiere cambiar: ");
+        String nuevoValorCampo = pedirString("Nuevo valor del campo: ");
 
-            resultado = ejecutarConsultaUnitaria(sesion,
-                    "let $id := "+ "'"+id +"'"+
-                    "let $new_value :=" + "'" + nuevoValorCampo + "'" +
-                    "replace value of node db:get('"+nombreBdXML+"')/productos/producto[id=$id]/"+campoModificar+" with $new_value");
-            System.out.println(resultado);
-        }while(resultado != null);
+        String con = String.format("let $prod:= db:get('productos')/productos/producto[id=%s] return replace value of node $prod/%s with '%s'",id,campoModificar,nuevoValorCampo);
+
+        try {
+            BaseXClient.Query query = sesion.query(con);
+
+            System.out.println(query.more());
+            System.out.println(query.info());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
