@@ -53,7 +53,7 @@ public class Main {
                         menuConsultasXML(session);
                         break;
                     case 2:
-                        menuConsultasMongo();
+                        menuConsultasMongo(session);
                         break;
                     case 0:
                         System.out.println();
@@ -71,7 +71,7 @@ public class Main {
     }
 
 
-    private static void menuConsultasMongo() {
+    private static void menuConsultasMongo(BaseXClient session) {
         int opt;
 
         do{
@@ -90,7 +90,7 @@ public class Main {
                     crearNuevoCliente();
                     break;
                 case 2:
-                    iniciarSesion();
+                    iniciarSesion(session);
                     break;
                 case 0:
                     System.out.println();
@@ -102,7 +102,7 @@ public class Main {
         }while (opt!=0);
     }
 
-    private static void iniciarSesion() {
+    private static void iniciarSesion(BaseXClient session) {
         seleccionarColeccion(colClientes);
 
         String email = pedirString("Introduce el email del cliente");
@@ -115,11 +115,11 @@ public class Main {
             Object id = result.first().get("_id");
             idCliente =  id.toString();
             System.out.println("La id del cliente es: " + idCliente);
-            menuSesionCliente();
+            menuSesionCliente(session);
         }else System.out.println("El cliente con email " + email + " no existe");
     }
 
-    private static void menuSesionCliente(){
+    private static void menuSesionCliente(BaseXClient session){
         int opt;
 
         do {
@@ -138,7 +138,7 @@ public class Main {
                     modificarElValorDeUnCampos();
                     break;
                 case 2:
-                    addProductoCarrito();
+                    addProductoCarrito(session);
                     break;
 
             }
@@ -148,10 +148,45 @@ public class Main {
 
     }
 
-    private static void addProductoCarrito() {
+    private static void addProductoCarrito(BaseXClient session) {
         seleccionarColeccion(colCarrito);
+        String seguir;
+        do {
+            int idProducto = pedirInt("Introduce la id del producto");
+            int cantidad = pedirInt("Introduce la cantidad");
 
+            conseguirDatosProducto(idProducto);
 
+            Document nuevoProducto = new Document("producto_id", idProducto)
+                    .append("cantidad", cantidad);
+
+            Document update = new Document("$push", new Document("carrito", nuevoProducto));
+
+            coleccion.updateOne(new Document("_id",idCliente),update);
+
+            seguir = pedirString("¿Quieres insertar mas productos? s/n");
+        }while(seguir.equalsIgnoreCase("n"));
+    }
+
+    private static ArrayList<String> conseguirDatosProducto(int id) {
+        try(BaseXClient session = new BaseXClient("localhost", 1984, "admin", "root")) {
+            String con = String.format("for $producto in /productos/producto[id=" + id + "] return ($producto/nombre/text(), $producto/precio/text())");
+            ArrayList<String> datos = new ArrayList<>();
+
+            try {
+                BaseXClient.Query query = session.query(con);
+
+                while (query.more()) {
+                    System.out.println(query.next());
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            return datos;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
