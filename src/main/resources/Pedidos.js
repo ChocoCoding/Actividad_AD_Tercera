@@ -1,0 +1,58 @@
+[
+  {
+    "_id": ObjectId("pedido_id_1"),
+    "cliente_id": ObjectId("cliente_id_1"),
+    "productos": [
+      {
+        "producto_id": 1,
+        "nombre": "Laptop HP Pavilion",
+        "cantidad": 2,
+        "precio_unitario": 799.99
+      }
+    ],
+    "total": 1599.98,
+    "fecha_pedido": ISODate("2023-01-01T12:30:00.000Z")
+  },
+  {
+    "_id": ObjectId("pedido_id_2"),
+    "cliente_id": ObjectId("cliente_id_2"),
+    "productos": [
+      {
+        "producto_id": 2,
+        "nombre": "Smartphone Samsung Galaxy S21",
+        "cantidad": 1,
+        "precio_unitario": 899.99
+      }
+    ],
+    "total": 899.99,
+    "fecha_pedido": ISODate("2023-01-02T13:45:00.000Z")
+  },
+  {
+    "_id": ObjectId("pedido_id_3"),
+    "cliente_id": ObjectId("cliente_id_3"),
+    "productos": [
+      {
+        "producto_id": 4,
+        "nombre": "Auriculares Inalámbricos Sony WH-1000XM4",
+        "cantidad": 1,
+        "precio_unitario": 299.99
+      }
+    ],
+    "total": 299.99,
+    "fecha_pedido": ISODate("2023-01-03T14:00:00.000Z")
+  },
+  {
+    "_id": ObjectId("pedido_id_4"),
+    "cliente_id": ObjectId("cliente_id_4"),
+    "productos": [
+      {
+        "producto_id": 5,
+        "nombre": "Televisor Samsung QLED Q80T",
+        "cantidad": 1,
+        "precio_unitario": 1299.99
+      }
+    ],
+    "total": 1299.99,
+    "fecha_pedido": ISODate("2023-01-04T15:15:00.000Z")
+  }
+]
