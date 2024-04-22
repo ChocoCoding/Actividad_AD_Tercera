@@ -1,0 +1,125 @@
+
+	java:S112G"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÁàÏ®ğ1J$e941dc1a-37ad-4189-936e-bfdd721bc344
+	java:S112Î"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÂàÏ®ğ1J$6f70d9bd-86be-4d61-be56-61529c536b02
+	java:S112Ó"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÃàÏ®ğ1J$52110fb8-a4e2-44ba-a472-e60b4f6dae89
+	java:S112«"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÄàÏ®ğ1J$f6989b52-aeaa-4417-b2af-c5bbdc77c3cd
+	java:S112Â"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÅàÏ®ğ1J$c145ccab-7e0d-4fab-972b-0073c9f98a40
+	java:S112Ú"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÆàÏ®ğ1J$30a60776-0b5d-4c5d-a982-f09c5a904305
+	java:S112ô"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÇàÏ®ğ1J$fdc0c046-88f6-4245-a208-b33c42a79d9a
+	java:S112‹"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÈàÏ®ğ1J$ce67fa07-edf8-48ee-a1de-2b69098f8c60
+	java:S112š"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÉàÏ®ğ1J$bbb8989d-3b72-4700-b559-30500ebf5fff
+	java:S112«"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ÊàÏ®ğ1J$0eba0c0d-e4fa-41af-9f72-1dfd5318324f
+®
+java:S1192µ"jDefine a constant instead of duplicating this literal "ERROR, el dato introducido no es correcto" 3 times.(š•®ó8ËàÏ®ğ1J$c2fede2f-fcdf-4129-b04b-ff55208b971b
+—
+java:S1192æ"SUse already-defined constant 'nombreBdMongo' instead of duplicating its value here.(æ½Œ–8ËàÏ®ğ1J$82633c6b-bba4-4a66-9ce6-061040eb0a9a
+
+java:S1192Ş"LDefine a constant instead of duplicating this literal "cliente_id" 12 times.(³£µf8ÌàÏ®ğ1J$e01fe301-a957-4cd2-91f7-99dc7c631df2
+™
+java:S1192Ğ"PDefine a constant instead of duplicating this literal "{$prod/precio}
+" 3 times.(ü¾ó¤ùÿÿÿÿ8ÌàÏ®ğ1J$207c8100-2bc4-467d-83a6-7f1ec2cad2d8
+
+java:S1192¶"LDefine a constant instead of duplicating this literal "<producto>
+" 4 times.(âØÓ¯8ÌàÏ®ğ1J$32f388c2-976d-4e31-8284-da6a41ce1083
+•
+java:S1192ë"QUse already-defined constant 'nombreBdXML' instead of duplicating its value here.(Ü»¡™8ÌàÏ®ğ1J$0adfa087-9a20-4b1c-bc7c-f893e69a2b9b
+‰
+java:S1192Š"FDefine a constant instead of duplicating this literal "email" 8 times.(û’'8ÌàÏ®ğ1J$744180f5-b392-431d-98a5-b71adee4da00
+
+java:S1192±"LDefine a constant instead of duplicating this literal "producto_id" 8 times.(Ë»Ü8ÌàÏ®ğ1J$0a149f05-8c70-4fab-9446-d072c67acc5c
+™
+java:S1192·"PDefine a constant instead of duplicating this literal "{$prod/nombre}
+" 4 times.(ŞÈ¤úÿÿÿÿ8ÌàÏ®ğ1J$f34c5e06-fb49-40a5-af05-62b970b99f34
+Œ
+java:S1192"HDefine a constant instead of duplicating this literal "return
+" 4 times.(ÆÂ¿¦8ÌàÏ®ğ1J$1f390c31-19ac-4745-bd65-1387f5e4c135
+
+java:S1192ò"JDefine a constant instead of duplicating this literal "direccion" 5 times.(æØË¾8ÌàÏ®ğ1J$05049f80-be3a-4c1c-b5af-b43094148b1f
+
+java:S1192¹"LDefine a constant instead of duplicating this literal "</producto>" 4 times.(õåî8ÌàÏ®ğ1J$d875a82f-fb4c-4c30-8c0f-077d218cbe6d
+”
+java:S1192Ÿ"PDefine a constant instead of duplicating this literal "precio_unitario" 9 times.(—–Æ8ÌàÏ®ğ1J$85d192eb-8cdf-4026-843c-47a56fef30dc
+’
+java:S1192 "IDefine a constant instead of duplicating this literal "cantidad" 9 times.(ùØò¹øÿÿÿÿ8ÌàÏ®ğ1J$9cadb016-2ba0-4406-bf4e-e11fc7cf72db
+Œ
+java:S1192²"HDefine a constant instead of duplicating this literal "nombre" 13 times.(‘Æø†8ÌàÏ®ğ1J$caf765b5-80d2-4e4d-985d-37cc0f39f238
+Š
+java:S1192ì"FDefine a constant instead of duplicating this literal "total" 3 times.(±ƒêÇ8ÌàÏ®ğ1J$62a71f4a-cb1e-4f8d-8732-d946ca5236a0
+œ
+java:S1192Î"SDefine a constant instead of duplicating this literal "{$prod/categoria}
+" 3 times.(ñãÖ‘ÿÿÿÿÿ8ÌàÏ®ğ1J$f0d4ee66-2711-4ff7-be26-09e82fedf458
+œ
+java:S1192B"YDefine a constant instead of duplicating this literal "La opcion no es correcta" 3 times.(î—ü°8ÌàÏ®ğ1J$01709bdd-36dc-4c9d-a4f3-7dc691ae1699
+¾
+java:S1192³"uDefine a constant instead of duplicating this literal "for $prod in db:get('productos')/productos/producto
+" 3 times.(‰™Ï»ùÿÿÿÿ8ÌàÏ®ğ1J$b3b2ef40-8d6c-4100-9c65-5c8b836f1c9e
+~
+java:S1141Ç"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8ÌàÏ®ğ1J$25821368-ce56-42a1-b8b4-f817f98ea115
+i	java:S101"MRename this class name to match the regular expression '^[A-Z][a-zA-Z0-9]*$'.(ïíø§8‚Ÿë®ğ1
+œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÆëÎñ8ÊáÏ®ğ1J$e83ff8f8-42a2-408b-a5ce-a3e0d2a7f62e
+œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¹ÂÏ‘8ÊáÏ®ğ1J$f8577878-be1a-4ff1-9213-a88ad4fa993e
+œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(éõì8ÊáÏ®ğ1J$b1803add-ce6f-494f-b136-c98dc6330661
+¡	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(¿ò²úÿÿÿÿ8ÊáÏ®ğ1J$128eb281-1cb7-45c5-8530-cf5fdb71bc78
+œ	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(ÕÈïó8ÊáÏ®ğ1J$fd31cc2e-b992-4eaa-90d8-718c993b5ea1
+u
+java:S1135+"2Complete the task associated to this TODO comment.(«¼İ­8ÎáÏ®ğ1J$26497e93-a1fb-4166-822a-f489a344d4c6
+r	java:S106?"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ÏáÏ®ğ1J$1cfd1353-5c1c-4633-b21a-801f624b5d13
+m	java:S106B"+Replace this use of System.out by a logger.(î—ü°8ÏáÏ®ğ1J$42ab15ea-6aac-45cd-bec5-7e93c4f85b7a
+“	java:S128i"LEnd this switch case with an unconditional break, return or throw statement.(ÌÊëÎüÿÿÿÿ8üöä®ğ1J$d1b0fce3-17ca-4959-bd2e-4ff6265c0b81
+r	java:S106l"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ĞáÏ®ğ1J$ad1217dd-c623-4d17-a879-cb5bb574d0ab
+m	java:S106o"+Replace this use of System.out by a logger.(î—ü°8ĞáÏ®ğ1J$e85c96ec-eba3-4b27-97bc-afccf5bd9942
+s	java:S106"+Replace this use of System.out by a logger.(È™˜ìùÿÿÿÿ8ÑáÏ®ğ1J$8c648586-5d4e-4d63-bbd7-8b5fe02b5fdf
+s	java:S106"+Replace this use of System.out by a logger.(š©şÿÿÿÿ8ÑáÏ®ğ1J$e3cb3b52-b080-4a11-ae49-d3bdd56475f1
+n	java:S106"+Replace this use of System.out by a logger.(âÏ„á8ÒáÏ®ğ1J$3f424eab-9498-4b35-a59b-d3106da2b6cb
+s	java:S106Ÿ"+Replace this use of System.out by a logger.(ˆâ×‘ıÿÿÿÿ8ÒáÏ®ğ1J$45668e03-7d62-4bc6-9b2f-756ccb551123
+s	java:S106¡"+Replace this use of System.out by a logger.( ğŠåüÿÿÿÿ8ÔáÏ®ğ1J$9a1b11dd-f9d9-4447-9fbd-9f0e31b38cce
+j	java:S131±""Add a default case to this switch.(„³¢Ïüÿÿÿÿ8ÒáÏ®ğ1J$b33a8f77-036e-427e-9b16-c0e21fac51a8
+s	java:S106×"+Replace this use of System.out by a logger.(È™˜ìùÿÿÿÿ8ÔáÏ®ğ1J$fe018ce8-9bd2-4a25-ab5d-9cf98169a30e
+s	java:S106á"+Replace this use of System.out by a logger.(¿÷ùşÿÿÿÿ8ÕáÏ®ğ1J$5a6da082-e1ab-4245-8d17-be75a8b12f55
+s	java:S106ñ"+Replace this use of System.out by a logger.(öâ¶ºùÿÿÿÿ8ÕáÏ®ğ1J$ef2fb55a-6654-40ca-8bec-a9fc1e272cd1
+n	java:S106ù"+Replace this use of System.out by a logger.(ñ¶Ä•8ÖáÏ®ğ1J$a8f4fecc-4291-4862-aa74-bf3155d29d72
+n	java:S106û"+Replace this use of System.out by a logger.(±º»Ù8ÖáÏ®ğ1J$7c613f74-dc45-4302-a848-9378b92d2391
+n	java:S106†"+Replace this use of System.out by a logger.(êÑÔœ8ÖáÏ®ğ1J$9bf95c5b-31d1-4a10-8878-9180e647848a
+s	java:S106ˆ"+Replace this use of System.out by a logger.(ï”ŠÕıÿÿÿÿ8ÖáÏ®ğ1J$5bd23686-2482-43ea-8473-8f4ef9331c42
+s	java:S106‹"+Replace this use of System.out by a logger.(î†òııÿÿÿÿ8ÖáÏ®ğ1J$c0e3ad48-db89-4588-9744-9a7afa9c0de2
+s	java:S106•"+Replace this use of System.out by a logger.(Õêüÿÿÿÿ8×áÏ®ğ1J$50fc426c-0854-470e-93d4-8b39968c759b
+m	java:S106œ"+Replace this use of System.out by a logger.(Şä‡b8×áÏ®ğ1J$16e61515-04a6-4d59-ba3e-cd4c8b52e56a
+s	java:S106£"+Replace this use of System.out by a logger.(ƒ§¢­ıÿÿÿÿ8ØáÏ®ğ1J$9919ed2d-ee27-43fb-8abf-74764969d2c8
+s	java:S106½"+Replace this use of System.out by a logger.(©±™Ùùÿÿÿÿ8ÚáÏ®ğ1J$d7d0419b-78b4-47f8-88ea-ae3d954d4ee6
+Š
+java:S3457Ä"AFormat specifiers should be used instead of string concatenation.(“œÇÇûÿÿÿÿ8ÙáÏ®ğ1J$b0a0c067-7ddf-400b-a70b-79138a100d54
+s	java:S106ã"+Replace this use of System.out by a logger.(Î–’Ñşÿÿÿÿ8ÚáÏ®ğ1J$feaaa552-0a8e-42e8-b42f-289f4ac33032
+m	java:S106ä"+Replace this use of System.out by a logger.(½çÖX8ÚáÏ®ğ1J$99729600-53f3-4ad1-8f2e-268d583c8975
+n	java:S106î"+Replace this use of System.out by a logger.(›±8ááÏ®ğ1J$d494f0ec-18c7-459d-a69f-9603baa6ee82
+	java:S128Œ"LEnd this switch case with an unconditional break, return or throw statement.(ÒñŠ{8àáÏ®ğ1J$daa7b1ad-8b53-4179-a624-89fd2a0e3f65
+s	java:S106"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ááÏ®ğ1J$c1332777-60e8-479a-8e1e-cbdc73e3cc50
+n	java:S106’"+Replace this use of System.out by a logger.(î—ü°8ááÏ®ğ1J$0ca19529-213d-4a65-9d9b-04c2685f8a2b
+v
+java:S6126˜"2Replace this String concatenation with Text block.(©Ë¾¡8ááÏ®ğ1J$5ac2d1d5-9f63-4161-aa55-fefc02effc9a
+s	java:S106¨"+Replace this use of System.out by a logger.(‚€Õ¦ıÿÿÿÿ8âáÏ®ğ1J$47a2029a-5282-433f-a1ca-38aee68247ed
+…
+java:S3457²"AFormat specifiers should be used instead of string concatenation.(´‹ú8âáÏ®ğ1J$b667c420-d4c9-4c42-9a80-112763daa405
+s	java:S106¿"+Replace this use of System.out by a logger.(‚€Õ¦ıÿÿÿÿ8âáÏ®ğ1J$8a210c9e-3d1b-449c-9ecb-f029aaf2123e
+{
+java:S6126É"2Replace this String concatenation with Text block.( ®ÂŞüÿÿÿÿ8âáÏ®ğ1J$3ce7ced8-e12f-4966-8828-86d309c13b14
+s	java:S106×"+Replace this use of System.out by a logger.(‚€Õ¦ıÿÿÿÿ8ãáÏ®ğ1J$d5421179-970d-4f23-a4af-7b279b709f28
+Š
+java:S3457â"AFormat specifiers should be used instead of string concatenation.(Ä®ˆŸúÿÿÿÿ8ãáÏ®ğ1J$d13c816e-b108-498c-855e-128a3af8538e
+s	java:S106ñ"+Replace this use of System.out by a logger.(‚€Õ¦ıÿÿÿÿ8äáÏ®ğ1J$9b9bda57-196f-4331-a029-6042c6da95e4
+{
+java:S6126ù"2Replace this String concatenation with Text block.(Ä®ˆŸúÿÿÿÿ8ãáÏ®ğ1J$f4409c2e-86ac-4f03-acf4-7f06168a77ad
+s	java:S106ˆ"+Replace this use of System.out by a logger.(‚€Õ¦ıÿÿÿÿ8äáÏ®ğ1J$8bd49fc7-98a5-4586-a6fd-e8fabde9319a
+Š
+java:S3457“"AFormat specifiers should be used instead of string concatenation.(Ã—‹–ûÿÿÿÿ8äáÏ®ğ1J$b16474bd-daf4-457e-bcce-f3d6e92de918
+n	java:S106—"+Replace this use of System.out by a logger.(ê‰²¢8äáÏ®ğ1J$9daf9368-38ab-42b0-a99c-9db235d2ca60
+n	java:S106˜"+Replace this use of System.out by a logger.(‚—8åáÏ®ğ1J$d62536b2-d710-4d49-8074-43e76f352414
+n	java:S106¨"+Replace this use of System.out by a logger.(ê‰²¢8åáÏ®ğ1J$2c5e364b-81c6-4579-be91-539fce68ae12
+n	java:S106©"+Replace this use of System.out by a logger.(‚—8åáÏ®ğ1J$ef9c6b5c-8799-48c4-a691-213d6babce3a
+n	java:S106²"+Replace this use of System.out by a logger.(Æ¼Ø°8åáÏ®ğ1J$a26c8d2f-1e0e-4b59-a354-ab571fbb2232
+n	java:S106µ"+Replace this use of System.out by a logger.(š•®ó8åáÏ®ğ1J$a44afcb2-4365-45b6-8ee3-9552e0b43626
+n	java:S106½"+Replace this use of System.out by a logger.(Æ¼Ø°8æáÏ®ğ1J$985acaf7-8d27-46c9-8272-fc0687b99556
+n	java:S106À"+Replace this use of System.out by a logger.(š•®ó8æáÏ®ğ1J$17c55015-1213-40a3-b3f2-5771b73e7e05
+n	java:S106È"+Replace this use of System.out by a logger.(Æ¼Ø°8æáÏ®ğ1J$84be57a2-8d1b-477c-9325-37d647f1d155
+n	java:S106Ë"+Replace this use of System.out by a logger.(š•®ó8¼ÿå®ğ1J$fccc84f3-254d-481d-852f-aae10a92da96
+t
+java:S1144Ä"0Remove this unused private "pedirDouble" method.(™ğ–8æáÏ®ğ1J$9a758dab-b069-4c15-8405-be670def7ace

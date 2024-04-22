@@ -1,20 +1,24 @@
 package org.example;
 
 import com.mongodb.client.*;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import org.basex.core.cmd.CreateDB;
 import org.basex.examples.api.BaseXClient;
-import org.basex.query.value.item.Str;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import javax.print.Doc;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+import static com.mongodb.client.model.Accumulators.sum;
+import static com.mongodb.client.model.Aggregates.*;
+import static com.mongodb.client.model.Indexes.ascending;
+import static com.mongodb.client.model.Updates.set;
+
+public class Tienda {
     static Scanner sc = new Scanner(System.in);
     static final String nombreBdXML = "productos";
     static final String nombreBdMongo = "tienda";
@@ -53,7 +57,7 @@ public class Main {
                         menuConsultasXML(session);
                         break;
                     case 2:
-                        menuConsultasMongo(session);
+                        menuConsultasMongo();
                         break;
                     case 0:
                         System.out.println();
@@ -71,13 +75,13 @@ public class Main {
     }
 
 
-    private static void menuConsultasMongo(BaseXClient session) {
+    private static void menuConsultasMongo() {
         int opt;
 
         do{
             opt = pedirInt("""
                     **********************************************************************************************************************************************************************
-                    1.- Crear un nuevo cliente (no podrá haber email repetidos). 
+                    1.- Crear un nuevo cliente (no podrá haber email repetidos).
                     2.- Iniciar Sesión con Email.
                     3.- Borrar un cliente.
                     4.- Teniendo en cuenta todos los clientes, calcular el total de la compra para cada carrito y listar los resultados ordenados por el total de forma ascendente.
@@ -90,8 +94,16 @@ public class Main {
                     crearNuevoCliente();
                     break;
                 case 2:
-                    iniciarSesion(session);
+                    iniciarSesion();
                     break;
+                case 3:
+                    borrarCliente();
+                    break;
+                case 4:
+                    mostrarPrecioTodosLosCarritos();
+                    break;
+                case 5:
+                    mostrarTotalGastadoPorClientePedidos();
                 case 0:
                     System.out.println();
                     break;
@@ -102,7 +114,37 @@ public class Main {
         }while (opt!=0);
     }
 
-    private static void iniciarSesion(BaseXClient session) {
+    private static void mostrarTotalGastadoPorClientePedidos() {
+        seleccionarColeccion(colPedidos);
+        var pipeline = Arrays.asList(
+                unwind("$productos"),
+                set("productos.total_producto", new Document("$multiply",
+                        Arrays.asList("$productos.cantidad", "$productos.precio_unitario"))),
+                group("$cliente_id", sum("total_gastado", "$productos.total_producto"))
+        );
+
+        MongoCursor<Document> cursor = coleccion.aggregate(pipeline).iterator();
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            System.out.println(doc.toJson());
+        }
+
+    }
+
+    private static void borrarCliente() {
+        seleccionarColeccion(colClientes);
+        String email = pedirString("Introduce el email del cliente a borrar");
+
+        DeleteResult dr = coleccion.deleteOne(new Document("email",email));
+
+        if (dr.getDeletedCount() > 0){
+            System.out.println("El cliente ha sido eliminado");
+        }else System.out.println("No se ha encontrado un cliente con email: " + email);
+
+
+    }
+
+    private static void iniciarSesion() {
         seleccionarColeccion(colClientes);
 
         String email = pedirString("Introduce el email del cliente");
@@ -115,11 +157,10 @@ public class Main {
             Object id = result.first().get("_id");
             idCliente =  id.toString();
             System.out.println("La id del cliente es: " + idCliente);
-            menuSesionCliente(session);
+            menuSesionCliente();
         }else System.out.println("El cliente con email " + email + " no existe");
     }
-
-    private static void menuSesionCliente(BaseXClient session){
+    private static void menuSesionCliente(){
         int opt;
 
         do {
@@ -138,7 +179,16 @@ public class Main {
                     modificarElValorDeUnCampos();
                     break;
                 case 2:
-                    addProductoCarrito(session);
+                    addProductoCarrito();
+                    break;
+                case 3:
+                    mostrarCarritoCliente();
+                    break;
+                case 4:
+                    mostrarPedidosCliente();
+                    break;
+                case 5:
+                    pagarCarrito();
                     break;
 
             }
@@ -148,36 +198,137 @@ public class Main {
 
     }
 
-    private static void addProductoCarrito(BaseXClient session) {
+    private static void mostrarPrecioTodosLosCarritos() {
+        seleccionarColeccion(colCarrito);
+
+        var pipeline = Arrays.asList(
+                unwind("$productos"),
+                set("productos.total_producto", new Document("$multiply",
+                        Arrays.asList("$productos.cantidad", "$productos.precio_unitario"))),
+                group("$cliente_id", sum("total_compra", "$productos.total_producto")),
+                sort(ascending("total_compra"))
+        );
+
+        MongoCursor<Document> cursor = coleccion.aggregate(pipeline).iterator();
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            System.out.println(doc.toJson());
+        }
+    }
+
+    private static void pagarCarrito() {
+    seleccionarColeccion(colCarrito);
+
+    Document carrito =  coleccion.find(new Document("cliente_id",new ObjectId(idCliente))).first();
+
+    if (carrito!=null){
+        System.out.println(carrito.toJson());
+
+        String conf = pedirString("¿Deseas hacer la compra? s/n");
+
+        if (conf.equalsIgnoreCase("s")){
+            Object carritoId = carrito.get("_id");
+
+            Document nuevoPedido = new Document();
+
+            nuevoPedido.append("cliente_id", new ObjectId(idCliente))
+                    .append("productos", carrito.get("productos"))
+                    .append("total", calcularTotalCarrito());
+
+            seleccionarColeccion(colPedidos);
+            coleccion.insertOne(nuevoPedido);
+
+            System.out.println("Pedido confirmado. ¡Gracias por su compra!");
+
+            ArrayList<Document> listaVacia = new ArrayList<>();
+
+            seleccionarColeccion(colCarrito);
+            Document updateQuery = new Document("$set",new Document("productos", listaVacia));
+            coleccion.updateOne(new Document("_id", carritoId), updateQuery);
+
+        }else System.out.println("Pedido cancelado");
+    }else {
+        System.out.println("El cliente no tiene ningún producto en el carrito.");
+    }
+
+    }
+
+    private static void mostrarPedidosCliente() {
+        seleccionarColeccion(colPedidos);
+        Iterable<Document> pedidosCliente = coleccion.find(new Document("cliente_id", new ObjectId(idCliente)));
+
+        if (pedidosCliente.iterator().hasNext()) {
+            // Imprimir los datos de los pedidos del cliente
+            System.out.println("Pedidos del Cliente:");
+            for (Document pedido : pedidosCliente) {
+                System.out.println(pedido.toJson());
+            }
+        } else {
+            System.out.println("El cliente no tiene ningún pedido.");
+        }
+
+}
+
+
+
+    private static void mostrarCarritoCliente() {
+        seleccionarColeccion(colCarrito);
+
+        System.out.println("Precio Total del Carrito: $" + calcularTotalCarrito());
+    }
+
+    private static Double calcularTotalCarrito(){
+        Document carritoCliente = coleccion.find(new Document("cliente_id",new ObjectId(idCliente))).first();
+        double precioTotalProductos = 0.0;
+        if (carritoCliente!=null){
+            System.out.println(carritoCliente.toJson());
+
+            for (Document prod : (Iterable<Document>) carritoCliente.get("productos")){
+                double precioUnitario = prod.getDouble("precio_unitario");
+                int cantidad = prod.getInteger("cantidad");
+                precioTotalProductos += precioUnitario * cantidad;
+            }
+        }else System.out.println("El cliente no tiene carrito");
+        return precioTotalProductos;
+    }
+
+    private static void addProductoCarrito() {
         seleccionarColeccion(colCarrito);
         String seguir;
         do {
             int idProducto = pedirInt("Introduce la id del producto");
             int cantidad = pedirInt("Introduce la cantidad");
 
-            conseguirDatosProducto(idProducto);
+            ArrayList<String> datosProducto = conseguirDatosProducto(idProducto);
 
-            Document nuevoProducto = new Document("producto_id", idProducto)
-                    .append("cantidad", cantidad);
+            Document nuevoProducto = new Document()
+                    .append("producto_id", idProducto)
+                    .append("nombre",datosProducto.get(0))
+                    .append("cantidad", cantidad)
+                    .append("precio_unitario",Double.parseDouble(datosProducto.get(1)));
 
-            Document update = new Document("$push", new Document("carrito", nuevoProducto));
 
-            coleccion.updateOne(new Document("_id",idCliente),update);
+            Document filtro = new Document("cliente_id",new ObjectId(idCliente));
+
+            Document update = new Document("$push", new Document("productos", nuevoProducto));
+
+            coleccion.updateOne(new Document(filtro),update);
+
+            System.out.println("Producto agregado al carrito");
 
             seguir = pedirString("¿Quieres insertar mas productos? s/n");
-        }while(seguir.equalsIgnoreCase("n"));
+        }while(!seguir.equalsIgnoreCase("n"));
     }
-
     private static ArrayList<String> conseguirDatosProducto(int id) {
         try(BaseXClient session = new BaseXClient("localhost", 1984, "admin", "root")) {
-            String con = String.format("for $producto in /productos/producto[id=" + id + "] return ($producto/nombre/text(), $producto/precio/text())");
+            String con = String.format("for $producto in db:get('productos')/productos/producto[id=" + id + "] return ($producto/nombre/text(), $producto/precio/text())");
             ArrayList<String> datos = new ArrayList<>();
 
             try {
                 BaseXClient.Query query = session.query(con);
 
                 while (query.more()) {
-                    System.out.println(query.next());
+                    datos.add(query.next());
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -188,8 +339,6 @@ public class Main {
             throw new RuntimeException(e);
         }
     }
-
-
     private static void modificarElValorDeUnCampos() {
         seleccionarColeccion(colClientes);
 
@@ -206,7 +355,6 @@ public class Main {
             System.out.println("Se han actualizado los campos");
         }else System.out.println("Ha ocurrido un error al actualizar los campos");
     }
-
     private static void crearNuevoCliente() {
         seleccionarColeccion(colClientes);
 
@@ -221,15 +369,44 @@ public class Main {
             String direccion = pedirString("Introduce tu direccion");
             Document nuevoCliente = new Document("nombre",nombre).append("email",email).append("direccion",direccion);
             coleccion.insertOne(nuevoCliente);
+
+            seleccionarColeccion(colCarrito);
+            ArrayList<Document> listaVacia = new ArrayList<>();
+            Document carritoNuevo =
+                    new Document("_id", new ObjectId())
+                    .append("cliente_id", nuevoCliente.get("_id"))
+                    .append("productos", listaVacia);
+            coleccion.insertOne(carritoNuevo);
         }
     }
-
     private static void insertarDatos() {
         seleccionarColeccion(colClientes);
         if (coleccion.countDocuments() == 0){
 
+        Document producto1 = new Document("producto_id", 1)
+                    .append("nombre", "Laptop HP Pavilion")
+                    .append("cantidad", 1)
+                    .append("precio_unitario", 799.99);
 
-        ArrayList<Document> listaClientes = new ArrayList<>();
+        Document producto2 = new Document("producto_id", 2)
+                    .append("nombre", "Smartphone Samsung Galaxy S21")
+                    .append("cantidad", 1)
+                    .append("precio_unitario", 899.99);
+
+        Document producto3 = new Document("producto_id", 3)
+                    .append("nombre", "Tablet Lenovo Tab M10")
+                    .append("cantidad", 1)
+                    .append("precio_unitario", 199.99);
+
+        Document producto4 = new Document("producto_id", 4)
+                    .append("nombre", "Auriculares Inalámbricos Sony WH-1000XM4")
+                    .append("cantidad", 1)
+                    .append("precio_unitario", 299.99);
+
+        Document producto5 = new Document("producto_id", 5)
+                    .append("nombre", "Televisor 4K con tecnología Quantum Dot y pantalla de 55 pulgadas.")
+                    .append("cantidad", 1)
+                    .append("precio_unitario", 1299.99);
 
         List<Document> clientes = new ArrayList<>();
         clientes.add(new Document("_id", new ObjectId())
@@ -252,18 +429,24 @@ public class Main {
 
         seleccionarColeccion(colCarrito);
         List<Document> carritos = new ArrayList<>();
+
         carritos.add(new Document("_id", new ObjectId())
                 .append("cliente_id", clientes.get(0).getObjectId("_id"))
-                .append("producto_id", 1)
-                .append("nombre", "Laptop HP Pavilion")
-                .append("cantidad", 2)
-                .append("precio_unitario", 799.99));
-        carritos.add(new Document("_id", new ObjectId())
-                .append("cliente_id", clientes.get(1).getObjectId("_id"))
-                .append("producto_id", 2)
-                .append("nombre", "Smartphone Samsung Galaxy S21")
-                .append("cantidad", 1)
-                .append("precio_unitario", 899.99));
+                .append("productos", Arrays.asList(producto1, producto2)));
+
+            carritos.add(new Document("_id", new ObjectId())
+                    .append("cliente_id", clientes.get(1).getObjectId("_id"))
+                    .append("productos", Arrays.asList(producto2, producto3, producto4)));
+
+            carritos.add(new Document("_id", new ObjectId())
+                    .append("cliente_id", clientes.get(2).getObjectId("_id"))
+                    .append("productos", Arrays.asList(producto5, producto1)));
+
+            carritos.add(new Document("_id", new ObjectId())
+                    .append("cliente_id", clientes.get(3).getObjectId("_id"))
+                    .append("productos", Arrays.asList(producto3)));
+
+
         coleccion.insertMany(carritos);
 
         seleccionarColeccion(colPedidos);
@@ -288,7 +471,6 @@ public class Main {
         coleccion.insertMany(pedidos);
         }
     }
-
     private static void seleccionarColeccion(String nombreColeccion){
         if (database == null)
             crearBD();
@@ -300,11 +482,9 @@ public class Main {
         }
 
     }
-
     private static void crearBD() {
         database = mongoClient.getDatabase("tienda");
     }
-    
     //********************* BASEX ************************
     private static void menuConsultasXML(BaseXClient session) {
         int opt;
